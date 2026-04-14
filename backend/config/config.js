@@ -1,22 +1,26 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const databasePath = path.resolve(__dirname, '../database/database.sqlite');
-
 export default {
   development: {
-    dialect: 'sqlite',
-    storage: databasePath,
+    username: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASS || 'postgres',
+    database: process.env.DB_NAME || 'unittcms',
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
   },
   test: {
-    dialect: 'sqlite',
-    storage: databasePath,
+    username: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASS || 'postgres',
+    database: process.env.DB_NAME || 'unittcms_test',
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
   },
   production: {
-    dialect: 'sqlite',
-    storage: databasePath,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'postgres',
   },
 };

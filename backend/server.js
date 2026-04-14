@@ -30,13 +30,11 @@ app.use(limiter);
 // Specify the directory to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// init sequalize
-const databasePath = path.resolve(__dirname, 'database/database.sqlite');
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: databasePath,
-  logging: false,
-});
+// init sequelize
+import configDefault from './config/config.js';
+const config = configDefault[process.env.NODE_ENV || 'development'];
+
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 // "/"
 import indexRoute from './routes/index.js';
