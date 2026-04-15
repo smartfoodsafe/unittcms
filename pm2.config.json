@@ -1,0 +1,32 @@
+{
+  "apps": [
+    {
+      "name": "backend",
+      "script": "npm",
+      "args": "start",
+      "cwd": "./backend",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "1000M",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8001
+      }
+    },
+    {
+      "name": "frontend",
+      "script": "npm",
+      "args": "run dev",
+      "cwd": "./frontend",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "1000M",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 8000
+      }
+    }
+  ]
+}
