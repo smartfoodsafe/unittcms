@@ -17,14 +17,14 @@
     {
       "name": "frontend",
       "script": "npm",
-      "args": "run dev",
+      "args": "start",
       "cwd": "./frontend",
       "instances": 1,
       "autorestart": true,
       "watch": false,
       "max_memory_restart": "1000M",
       "env": {
-        "NODE_ENV": "development",
+        "NODE_ENV": "production",
         "PORT": 8000
       }
     }
