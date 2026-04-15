@@ -11,7 +11,13 @@
       "max_memory_restart": "1000M",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 8001
+        "PORT": 8001,
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432",
+        "DB_NAME": "unittcms",
+        "DB_USER": "postgres",
+        "DB_PASS": "postgres",
+        "SECRET_KEY": "ABCD1234"
       }
     },
     {
@@ -25,7 +31,8 @@
       "max_memory_restart": "1000M",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 8000
+        "PORT": 8000,
+        "NEXT_PUBLIC_BACKEND_ORIGIN": "http://13.89.122.0:8001"
       }
     }
   ]
