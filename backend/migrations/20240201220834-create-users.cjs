@@ -1,31 +1,30 @@
-export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('projects', {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+  await queryInterface.createTable('users', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    detail: {
+    username: {
       type: Sequelize.STRING,
-      allowNull: true,
-    },
-    isPublic: {
-      type: Sequelize.BOOLEAN,
       allowNull: false,
     },
-    userId: {
+    role: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
+    },
+    avatarPath: {
+      type: Sequelize.STRING,
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -36,8 +35,9 @@ export async function up(queryInterface, Sequelize) {
       allowNull: false,
     },
   });
-}
+  },
 
-export async function down(queryInterface) {
-  await queryInterface.dropTable('projects');
-}
+  down: async (queryInterface) => {
+  await queryInterface.dropTable('users');
+  }
+};

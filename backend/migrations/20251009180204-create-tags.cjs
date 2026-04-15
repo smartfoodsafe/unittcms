@@ -1,25 +1,15 @@
-export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('runs', {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+  await queryInterface.createTable('tags', {
     id: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
     },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
-    configurations: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
-    description: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
-    state: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
     },
     projectId: {
       type: Sequelize.INTEGER,
@@ -28,7 +18,6 @@ export async function up(queryInterface, Sequelize) {
         model: 'projects',
         key: 'id',
       },
-      onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
     createdAt: {
@@ -40,8 +29,9 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.DATE,
     },
   });
-}
+  },
 
-export async function down(queryInterface) {
-  await queryInterface.dropTable('runs');
-}
+  down: async (queryInterface) => {
+  await queryInterface.dropTable('tags');
+  }
+};

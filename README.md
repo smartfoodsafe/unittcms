@@ -20,6 +20,11 @@ UnitTCMS is an open source test case management system. The application is free 
 
 [📘Docs](https://kimatata.github.io/unittcms/docs)
 
+## Documentation
+
+- [Local Development Setup](./LOCAL_SETUP.md)
+- [Deployment Guide](./DEPLOYMENT_GUIDE.md)
+
 ## Getting Started
 
 ```bash

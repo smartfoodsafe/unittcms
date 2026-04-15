@@ -1,16 +1,39 @@
 services:
-  unittcms:
-    image: unittcms:latest
+  app:
     build: .
     ports:
       - '8000:8000'
+      - '8001:8001'
     environment:
-      - PORT=8000
+      - PORT=8001
       - SECRET_KEY=your_secret_key_here
-      - IS_DEMO=false # set to true to seed the database
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=unittcms
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - FRONTEND_ORIGIN=http://localhost:8000
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
-      - db-data:/app/backend/database
       - ./backend/public/uploads:/app/backend/public/uploads
 
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=unittcms
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
-  db-data:
+  postgres_data:

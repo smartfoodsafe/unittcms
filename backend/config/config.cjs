@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   development: {
     username: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'postgres',

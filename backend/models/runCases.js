@@ -12,7 +12,7 @@ function defineRunCase(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-  });
+  }, { tableName: 'runCases' });
 
   RunCase.associate = (models) => {
     RunCase.belongsTo(models.Run, {

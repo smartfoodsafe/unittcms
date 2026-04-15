@@ -31,7 +31,8 @@ app.use(limiter);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // init sequelize
-import configDefault from './config/config.js';
+import configDefault from './config/config.cjs';
+
 const config = configDefault[process.env.NODE_ENV || 'development'];
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);

@@ -1,10 +1,12 @@
-export async function up(queryInterface, Sequelize) {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
   await queryInterface.addColumn('users', 'locale', {
     type: Sequelize.STRING(20),
     allowNull: true,
   });
-}
+  },
 
-export async function down(queryInterface) {
+  down: async (queryInterface) => {
   await queryInterface.removeColumn('users', 'locale');
-}
+  }
+};

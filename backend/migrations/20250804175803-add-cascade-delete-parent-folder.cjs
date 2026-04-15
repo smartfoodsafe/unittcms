@@ -1,4 +1,5 @@
-export async function up(queryInterface) {
+module.exports = {
+  up: async (queryInterface) => {
   await queryInterface.addConstraint('folders', {
     fields: ['parentFolderId'],
     type: 'foreign key',
@@ -10,8 +11,9 @@ export async function up(queryInterface) {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
-}
+  },
 
-export async function down(queryInterface) {
+  down: async (queryInterface) => {
   await queryInterface.removeConstraint('folders', 'fk_folders_parentFolderId');
-}
+  }
+};

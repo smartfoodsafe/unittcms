@@ -1,27 +1,32 @@
-export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('caseAttachments', {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+  await queryInterface.createTable('members', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    caseId: {
+    userId: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'cases',
+        model: 'users',
         key: 'id',
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
-    attachmentId: {
+    projectId: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'attachments',
+        model: 'projects',
         key: 'id',
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
+    },
+    role: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -33,11 +38,12 @@ export async function up(queryInterface, Sequelize) {
     },
   });
 
-  await queryInterface.addIndex('caseAttachments', ['caseId', 'attachmentId'], {
+  await queryInterface.addIndex('members', ['userId', 'projectId'], {
     unique: true,
   });
-}
+  },
 
-export async function down(queryInterface) {
-  await queryInterface.dropTable('caseAttachments');
-}
+  down: async (queryInterface) => {
+  await queryInterface.dropTable('members');
+  }
+};

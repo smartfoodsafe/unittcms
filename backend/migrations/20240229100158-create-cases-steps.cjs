@@ -1,18 +1,10 @@
-export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('runCases', {
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+  await queryInterface.createTable('caseSteps', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    runId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'runs',
-        key: 'id',
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
     caseId: {
       type: Sequelize.INTEGER,
@@ -23,7 +15,16 @@ export async function up(queryInterface, Sequelize) {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
-    status: {
+    stepId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'steps',
+        key: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    },
+    stepNo: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
@@ -37,11 +38,12 @@ export async function up(queryInterface, Sequelize) {
     },
   });
 
-  await queryInterface.addIndex('runCases', ['runId', 'caseId'], {
+  await queryInterface.addIndex('caseSteps', ['caseId', 'stepId'], {
     unique: true,
   });
-}
+  },
 
-export async function down(queryInterface) {
-  await queryInterface.dropTable('runCases');
-}
+  down: async (queryInterface) => {
+  await queryInterface.dropTable('caseSteps');
+  }
+};

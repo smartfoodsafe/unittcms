@@ -1,4 +1,5 @@
-export async function up(queryInterface) {
+module.exports = {
+  up: async (queryInterface) => {
   /**
    * Add altering commands here.
    *
@@ -9,13 +10,14 @@ export async function up(queryInterface) {
   await queryInterface.renameColumn('users', 'createdAt', 'created_at');
   await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
   await queryInterface.renameColumn('users', 'avatarPath', 'avatar_path');
-}
+  },
 
-export async function down() {
+  down: async () => {
   /**
    * Add reverting commands here.
    *
    * Example:
    * await queryInterface.dropTable('users');
    */
-}
+  }
+};
