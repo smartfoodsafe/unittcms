@@ -17,7 +17,8 @@
         "DB_NAME": "unittcms",
         "DB_USER": "postgres",
         "DB_PASS": "postgres",
-        "SECRET_KEY": "ABCD1234"
+        "SECRET_KEY": "ABCD1234",
+        "FRONTEND_ORIGIN": "http://13.89.122.0:8000"
       }
     },
     {
