@@ -10,7 +10,7 @@
       "watch": false,
       "max_memory_restart": "1000M",
       "env": {
-        "NODE_ENV": "production",
+        "NODE_ENV": "development",
         "PORT": 8001,
         "DB_HOST": "localhost",
         "DB_PORT": "5432",
@@ -30,7 +30,7 @@
       "watch": false,
       "max_memory_restart": "1000M",
       "env": {
-        "NODE_ENV": "production",
+        "NODE_ENV": "development",
         "PORT": 8000,
         "NEXT_PUBLIC_BACKEND_ORIGIN": "http://13.89.122.0:8001"
       }
