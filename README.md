@@ -43,6 +43,10 @@ The app uses Postgres when `DB_HOST` (or `DB_DIALECT=postgres`) is set — `dock
 
 Connection variables: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, optional `DB_POOL_MAX`.
 
+### Restricting sign-up
+
+Set `ALLOWED_SIGNUP_DOMAINS` (comma-separated, e.g. `example.com,example.org`) to restrict account creation to email addresses from those domains. When unset, anyone can sign up.
+
 To move data from an existing SQLite database into Postgres:
 
 ```bash

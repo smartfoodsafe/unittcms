@@ -13,6 +13,21 @@ export default function (sequelize) {
   router.post('/signup', async (req, res) => {
     try {
       const { email, password, username } = req.body;
+
+      // When ALLOWED_SIGNUP_DOMAINS is set (comma-separated), only emails
+      // from those domains may sign up
+      const allowedDomains = (process.env.ALLOWED_SIGNUP_DOMAINS || '')
+        .split(',')
+        .map((domain) => domain.trim().toLowerCase())
+        .filter(Boolean);
+      if (allowedDomains.length > 0) {
+        const emailParts = typeof email === 'string' ? email.split('@') : [];
+        const domain = emailParts.length === 2 ? emailParts[1].toLowerCase() : '';
+        if (!domain || !allowedDomains.includes(domain)) {
+          return res.status(403).json({ error: 'Sign up is not allowed for this email domain' });
+        }
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const userCount = await User.count();

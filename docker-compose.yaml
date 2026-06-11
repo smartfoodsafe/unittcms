@@ -8,6 +8,7 @@ services:
       - PORT=8000
       - SECRET_KEY=your_secret_key_here
       - IS_DEMO=false # set to true to seed the database
+      - ALLOWED_SIGNUP_DOMAINS=smartfoodsafe.com # comma-separated; unset to allow any domain
       - DB_DIALECT=postgres
       - DB_HOST=db
       - DB_PORT=5432
