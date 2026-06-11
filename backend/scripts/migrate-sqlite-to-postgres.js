@@ -58,7 +58,7 @@ async function getBooleanColumns(table) {
   return rows.map((row) => row.column_name);
 }
 
-async function copyTable(table) {
+async function copyTable(table, transaction) {
   const rows = await sqlite.query(`SELECT * FROM "${table}"`, { type: QueryTypes.SELECT });
   if (rows.length === 0) {
     console.log(`  ${table}: empty, skipped`);
@@ -76,7 +76,7 @@ async function copyTable(table) {
     return result;
   });
 
-  await postgres.getQueryInterface().bulkInsert(table, converted);
+  await postgres.getQueryInterface().bulkInsert(table, converted, { transaction });
   console.log(`  ${table}: ${rows.length} rows copied`);
 }
 
@@ -108,9 +108,17 @@ async function main() {
   await postgres.authenticate();
   await assertPostgresEmpty();
 
+  // Single transaction: a failure leaves Postgres empty instead of partially copied
   console.log('Copying tables...');
-  for (const table of TABLES) {
-    await copyTable(table);
+  const transaction = await postgres.transaction();
+  try {
+    for (const table of TABLES) {
+      await copyTable(table, transaction);
+    }
+    await transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
   }
 
   console.log('Resetting sequences...');

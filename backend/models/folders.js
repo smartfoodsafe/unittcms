@@ -7,7 +7,7 @@ function defineFolder(sequelize, DataTypes) {
         allowNull: false,
       },
       detail: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       parentFolderId: {

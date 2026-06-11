@@ -3,11 +3,11 @@ function defineStep(sequelize, DataTypes) {
     'Step',
     {
       step: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       result: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
     },

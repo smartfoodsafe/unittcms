@@ -11,7 +11,7 @@ function defineRun(sequelize, DataTypes) {
         allowNull: true,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       state: {
