@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import RateLimit from 'express-rate-limit';
 import { Sequelize } from 'sequelize';
+import dbConfig from './config/config.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -31,10 +32,9 @@ app.use(limiter);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // init sequalize
-const databasePath = path.resolve(__dirname, 'database/database.sqlite');
+const env = process.env.NODE_ENV || 'development';
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: databasePath,
+  ...dbConfig[env],
   logging: false,
 });
 

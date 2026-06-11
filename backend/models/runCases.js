@@ -1,18 +1,22 @@
 function defineRunCase(sequelize, DataTypes) {
-  const RunCase = sequelize.define('RunCase', {
-    runId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+  const RunCase = sequelize.define(
+    'RunCase',
+    {
+      runId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      caseId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    caseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    status: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+    { tableName: 'runCases' }
+  );
 
   RunCase.associate = (models) => {
     RunCase.belongsTo(models.Run, {

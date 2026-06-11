@@ -27,6 +27,9 @@ export default function (sequelize) {
   const { verifyProjectVisibleFromProjectId } = visibilityMiddleware(sequelize);
   const { verifyProjectVisibleFromRunId } = visibilityMiddleware(sequelize);
 
+  // Case-insensitive search: Postgres LIKE is case-sensitive, SQLite's is not
+  const containsOp = sequelize.getDialect() === 'postgres' ? Op.iLike : Op.like;
+
   router.get(
     '/byproject',
     verifySignedIn,
@@ -57,8 +60,8 @@ export default function (sequelize) {
 
           if (searchTerm.length >= 1) {
             caseWhereClause[Op.or] = [
-              { title: { [Op.like]: `%${searchTerm}%` } },
-              { description: { [Op.like]: `%${searchTerm}%` } },
+              { title: { [containsOp]: `%${searchTerm}%` } },
+              { description: { [containsOp]: `%${searchTerm}%` } },
             ];
           }
         }
@@ -115,9 +118,9 @@ export default function (sequelize) {
                 'status',
                 [
                   sequelize.literal(
-                    '(SELECT COUNT(*) FROM `comments` WHERE `comments`.`commentableType` = ' +
+                    '(SELECT COUNT(*) FROM "comments" WHERE "comments"."commentableType" = ' +
                       sequelize.escape('RunCase') +
-                      ' AND `comments`.`commentableId` = `RunCases`.`id`)'
+                      ' AND "comments"."commentableId" = "RunCases"."id")'
                   ),
                   'commentCount',
                 ],

@@ -1,14 +1,18 @@
 function defineStep(sequelize, DataTypes) {
-  const Step = sequelize.define('Step', {
-    step: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  const Step = sequelize.define(
+    'Step',
+    {
+      step: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      result: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    result: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  });
+    { tableName: 'steps' }
+  );
 
   Step.associate = (models) => {
     Step.belongsToMany(models.Case, {

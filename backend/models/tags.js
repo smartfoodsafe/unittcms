@@ -1,19 +1,23 @@
 function defineTag(sequelize, DataTypes) {
-  const Tags = sequelize.define('Tags', {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    projectId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'projects',
-        key: 'id',
+  const Tags = sequelize.define(
+    'Tags',
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
-      onDelete: 'CASCADE',
+      projectId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'projects',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
     },
-  });
+    { tableName: 'tags' }
+  );
 
   Tags.associate = (models) => {
     Tags.belongsTo(models.Project, {

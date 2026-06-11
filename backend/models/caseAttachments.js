@@ -1,14 +1,18 @@
 function defineCaseAttachment(sequelize, DataTypes) {
-  const CaseAttachment = sequelize.define('CaseAttachment', {
-    caseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+  const CaseAttachment = sequelize.define(
+    'CaseAttachment',
+    {
+      caseId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      attachmentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    attachmentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+    { tableName: 'caseAttachments' }
+  );
 
   CaseAttachment.associate = (models) => {
     CaseAttachment.belongsTo(models.Case, {

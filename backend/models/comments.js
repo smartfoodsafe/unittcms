@@ -1,22 +1,26 @@
 function defineComment(sequelize, DataTypes) {
-  const Comment = sequelize.define('Comment', {
-    commentableType: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  const Comment = sequelize.define(
+    'Comment',
+    {
+      commentableType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      commentableId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
     },
-    commentableId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  });
+    { tableName: 'comments' }
+  );
 
   Comment.associate = (models) => {
     // Polymorphic associations

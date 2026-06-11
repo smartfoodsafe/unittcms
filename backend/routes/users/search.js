@@ -10,6 +10,9 @@ export default function (sequelize) {
   const User = defineUser(sequelize, DataTypes);
   const Member = defineMember(sequelize, DataTypes);
 
+  // Case-insensitive search: Postgres LIKE is case-sensitive, SQLite's is not
+  const containsOp = sequelize.getDialect() === 'postgres' ? Op.iLike : Op.like;
+
   router.get('/search', verifySignedIn, async (req, res) => {
     try {
       const { projectId, search } = req.query;
@@ -18,7 +21,7 @@ export default function (sequelize) {
       }
 
       let where = {
-        [Op.or]: [{ email: { [Op.like]: `%${search}%` } }, { username: { [Op.like]: `%${search}%` } }],
+        [Op.or]: [{ email: { [containsOp]: `%${search}%` } }, { username: { [containsOp]: `%${search}%` } }],
       };
 
       let excludeIdArray = [];

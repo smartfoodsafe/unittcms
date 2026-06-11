@@ -10,6 +10,9 @@ import visibilityMiddleware from '../../middleware/verifyVisible.js';
 export default function (sequelize) {
   const { verifySignedIn } = authMiddleware(sequelize);
   const { verifyProjectVisibleFromFolderId } = visibilityMiddleware(sequelize);
+
+  // Case-insensitive search: Postgres LIKE is case-sensitive, SQLite's is not
+  const containsOp = sequelize.getDialect() === 'postgres' ? Op.iLike : Op.like;
   const Case = defineCase(sequelize, DataTypes);
   const Tags = defineTag(sequelize, DataTypes);
 
@@ -37,8 +40,8 @@ export default function (sequelize) {
 
         if (searchTerm.length >= 1) {
           whereClause[Op.or] = [
-            { title: { [Op.like]: `%${searchTerm}%` } },
-            { description: { [Op.like]: `%${searchTerm}%` } },
+            { title: { [containsOp]: `%${searchTerm}%` } },
+            { description: { [containsOp]: `%${searchTerm}%` } },
           ];
         }
       }

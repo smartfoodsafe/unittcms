@@ -1,18 +1,22 @@
 function defineCaseStep(sequelize, DataTypes) {
-  const CaseStep = sequelize.define('CaseStep', {
-    caseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+  const CaseStep = sequelize.define(
+    'CaseStep',
+    {
+      caseId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      stepId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      stepNo: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    stepId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    stepNo: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+    { tableName: 'caseSteps' }
+  );
 
   CaseStep.associate = (models) => {
     CaseStep.belongsTo(models.Case, {

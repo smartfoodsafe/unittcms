@@ -37,6 +37,20 @@ You can access the app at `http://localhost:8000`
 
 [Looking for a non-Docker way?](https://kimatata.github.io/unittcms/docs/getstarted/from-source)
 
+### Database
+
+The app uses Postgres when `DB_HOST` (or `DB_DIALECT=postgres`) is set — `docker-compose.yaml` ships with a Postgres service preconfigured. Without these variables it falls back to a local SQLite file, so existing single-file setups keep working.
+
+Connection variables: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, optional `DB_POOL_MAX`.
+
+To move data from an existing SQLite database into Postgres:
+
+```bash
+cd backend
+npx sequelize-cli db:migrate   # create the schema in Postgres first
+npm run migrate:sqlite-to-postgres [path/to/database.sqlite]
+```
+
 ## Why UnitTCMS
 
 There are many test case management tools available in the market, which can be categorized into proprietary and open-source solutions.
