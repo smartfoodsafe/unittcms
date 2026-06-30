@@ -226,6 +226,10 @@ export default function CaseEditor({
       if (!tokenContext.isSignedIn()) return;
       try {
         const data = await fetchCase(tokenContext.token.access_token, Number(caseId));
+        if (!data) {
+          addToast({ title: 'Error', color: 'danger', description: 'Failed to load test case' });
+          return;
+        }
         data.Steps.forEach((step: StepType) => {
           step.editState = 'notChanged';
         });
@@ -273,6 +277,12 @@ export default function CaseEditor({
             color="primary"
             isLoading={isUpdating}
             onPress={async () => {
+              // Guard against saving before the case has loaded: a failed fetch
+              // leaves testCase at its default (id 0), which would PUT to /cases/0
+              if (testCase.id !== Number(caseId)) {
+                addToast({ title: 'Error', color: 'danger', description: 'Case not loaded yet. Please reload.' });
+                return;
+              }
               setIsUpdating(true);
               try {
                 await updateCase(tokenContext.token.access_token, testCase);

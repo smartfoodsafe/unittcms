@@ -52,6 +52,7 @@ export default function TestCaseFilter({
   const [tags, setTags] = useState<Tag[]>([]);
 
   useEffect(() => {
+    if (!tokenContext.token.access_token) return;
     const fetchDataEffect = async () => {
       try {
         const tagsResponse = (await fetchTags(tokenContext.token.access_token, projectId)) || [];

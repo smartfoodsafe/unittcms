@@ -27,6 +27,7 @@ export default function CaseTagsEditor({ projectId, selectedTags, onChange, mess
   const isProjectDeveloper = tokenContext.isProjectDeveloper(Number(projectId));
 
   useEffect(() => {
+    if (!tokenContext.token.access_token) return;
     const fetchDataEffect = async () => {
       try {
         const tagsResponse = (await fetchTags(tokenContext.token.access_token, projectId)) || [];
