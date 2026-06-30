@@ -58,7 +58,24 @@ async function getBooleanColumns(table) {
   return rows.map((row) => row.column_name);
 }
 
+async function sqliteTableExists(table) {
+  // COLLATE NOCASE: some tables were created with capitalized names (e.g.
+  // "Attachments") that SQLite otherwise matches case-insensitively
+  const rows = await sqlite.query(
+    `SELECT name FROM sqlite_master WHERE type = 'table' AND name = :table COLLATE NOCASE`,
+    { replacements: { table }, type: QueryTypes.SELECT }
+  );
+  return rows.length > 0;
+}
+
 async function copyTable(table, transaction) {
+  // The source database may predate later migrations (e.g. tags, comments);
+  // a missing table just means there is nothing to copy.
+  if (!(await sqliteTableExists(table))) {
+    console.log(`  ${table}: not in source, skipped`);
+    return;
+  }
+
   const rows = await sqlite.query(`SELECT * FROM "${table}"`, { type: QueryTypes.SELECT });
   if (rows.length === 0) {
     console.log(`  ${table}: empty, skipped`);
