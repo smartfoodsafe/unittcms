@@ -38,8 +38,8 @@ export default function (sequelize) {
   const Case = defineCase(sequelize, DataTypes);
   const Step = defineStep(sequelize, DataTypes);
   const CaseStep = defineCaseStep(sequelize, DataTypes);
-  Case.belongsToMany(Step, { through: CaseStep });
-  Step.belongsToMany(Case, { through: CaseStep });
+  Case.belongsToMany(Step, { through: CaseStep, foreignKey: 'caseId', otherKey: 'stepId' });
+  Step.belongsToMany(Case, { through: CaseStep, foreignKey: 'stepId', otherKey: 'caseId' });
   const { verifySignedIn } = authMiddleware(sequelize);
   const { verifyProjectDeveloperFromFolderId } = editableMiddleware(sequelize);
 
